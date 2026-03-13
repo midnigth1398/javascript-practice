@@ -1,1 +1,1 @@
-console.log("Estoy aprendiendo Git con atlas");
+console.log("Estoy aprendiendo Git y JavaScript");
