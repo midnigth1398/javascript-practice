@@ -1,3 +1,11 @@
+function runTest(testName, result, expected) {
+    if (result === expected) {
+        console.log(testName + ": PASS");
+    } else {
+        console.log(testName + ": FAIL");
+    }
+}
+
 function countSpecialNumbers(numbers){
     let specialCount = 0;
 
@@ -10,22 +18,7 @@ function countSpecialNumbers(numbers){
     return specialCount;
 }
 
-let numbers = [3, 8, 15, 20, 7];
-let result = countSpecialNumbers(numbers);
-let expected = 1;
+runTest("Test 1", countSpecialNumbers([3, 8, 15, 20, 7]), 1);
+runTest("Test 2", countSpecialNumbers([2, 4, 12, 14]), 2);
+runTest("Test 3", countSpecialNumbers([11, 13, 15]), 0);
 
-if (result === expected) {
-    console.log("Test 1: PASS");
-} else {
-    console.log("Test 1: FAIL");
-}
-
-let numbers2 = [2, 4, 12, 14];
-let result2 =
-countSpecialNumbers(numbers2);
-let expected2 = 2;
-if (result2 === expected2) {
-    console.log("Test 2: PASS");
-} else {
-    console.log("Test 2: FAIL");
-}
