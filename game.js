@@ -26,6 +26,13 @@ function attack() {
         money += 5
         nextEnemy();
     }
+    let enemyText =
+    document.getElementById("enemy");
+
+    enemyText.style.transform = "scale(1.2)";
+    setTimeout(() => {
+        enemyText.style.transform = "scale(1)";
+    }, 100)
 }
 
 function enemyAttack() {
