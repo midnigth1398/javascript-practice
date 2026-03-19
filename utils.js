@@ -1,11 +1,11 @@
-function countSpecialNumbers(numbers) {
-    let specialCount = 0;
-    for (let i =0; i < numbers.length; i++) {
-        let num = numbers[i];
-        if (num % 2 === 0 && num > 10) {
-            specialCount++
+function buildPattern(n) {
+    for (let i= 1; i <= n; i++) {
+        let line = "";
+
+        for (let j = 1; j <= i; j++) {
+              line = line + j; 
         }
+        console.log(line);
     }
-    return specialCount;
 }
-module.exports = { countSpecialNumbers };
+module.exports = { buildPattern };
