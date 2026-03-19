@@ -11,6 +11,10 @@ function updateUI() {
 
     document.getElementById("money").textContent =
     "Dinero: " + money;
+
+    document.getElementById("level").textContent = "Nivel: " + level;
+    document.getElementById("damage").textContent = "Dano: " + damage;
+    document.getElementById("cost").textContent = "Costo mejora: " + upgradeCost;
 }
 let gameLoop; 
 
