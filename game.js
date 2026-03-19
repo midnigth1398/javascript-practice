@@ -32,7 +32,11 @@ function attack() {
     enemyText.style.transform = "scale(1.2)";
     setTimeout(() => {
         enemyText.style.transform = "scale(1)";
-    }, 100)
+    }, 100);    
+    let btn = document.getElementById("attackBtn");
+    btn.disabled = true;
+    setTimeout(() => {btn.disabled = false;
+    }, 500); 
 }
 
 function enemyAttack() {
