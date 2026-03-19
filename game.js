@@ -1,13 +1,12 @@
 let enemyHealth = 10;
 let money = 0;
 let damage = 1;
+let level = 1;
 
 function updateUI() {
-    document.getElementById("enemy").textContent =
-            "vida del enemigo: " + enemyHealth;
-    
-            document.getElementById("money").textContent =
-            "Dinero: " + money;
+    let maxHealth = 10 + (level * 2);
+    let healthPercent = (enemyHealth / maxHealth) * 100;
+    document.getElementById("healthBar").style.width = healthPercent + "%";
 }
 
 function attack() {
@@ -32,7 +31,8 @@ function enemyAttack() {
 }
 
 function nextEnemy() {
-    enemyHealth = 10;
+    level++;
+    enemyHealth = 10 + (level * 2);
     updateUI();
 }
 
@@ -46,5 +46,5 @@ function upgrade() {
     console.log("✖️ No tienes suficiente dinero");
 }
 }
-let gameLopp = setInterval(enemyAttack, 2000);
+let gameLopp = setInterval(enemyAttack, 2000 - (level * 100));
 
