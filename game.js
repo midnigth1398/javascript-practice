@@ -2,12 +2,13 @@ let enemyHealth = 10;
 let money = 0;
 let damage = 1;
 let level = 1;
+let upgradeCost = 10;
 
 function updateUI() {
     let maxHealth = 10 + (level * 2);
     let healthPercent = (enemyHealth / maxHealth) * 100;
     document.getElementById("healthBar").style.width = healthPercent + "%";
-    
+
     document.getElementById("money").textContent =
     "Dinero: " + money;
 }
@@ -43,10 +44,12 @@ function nextEnemy() {
 }
 
 function upgrade() {
-    if (money >= 10) {
-    money -= 10;
-    damage++
-    console.log(" Dano mejorado:", damage);
+    if (money >= upgradeCost) {
+        money -= upgradeCost;
+        damage++;
+
+        upgradeCost = Math.floor(upgradeCost * 1.5); 
+    console.log(" Dano:", damage, "Costo:", upgradeCost);
     updateUI();
     } else {
     console.log("✖️ No tienes suficiente dinero");
