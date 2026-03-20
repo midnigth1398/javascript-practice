@@ -15,6 +15,8 @@ function updateUI() {
     document.getElementById("level").textContent = "Nivel: " + level;
     document.getElementById("damage").textContent = "Dano: " + damage;
     document.getElementById("cost").textContent = "Costo mejora: " + upgradeCost;
+    document.getElementById("playerHealth").textContent =
+    "Tu vida: " + player.health;
 }
 let gameLoop; 
 
@@ -40,7 +42,7 @@ function attack() {
 }
 
 function enemyAttack() {
-    enemyHealth--;
+    enemyHealth = enemyHealth - damage;
     updateUI();
 
     if (enemyHealth <= 0) {
@@ -74,6 +76,11 @@ function upgrade() {
     console.log("✖️ No tienes suficiente dinero");
 }
 }
+let player = {
+    name: "Hero",
+    health: 100,
+    maxHealth: 100
+};
 
 let speed = 2000;
 function startGameLoop() { 
@@ -81,5 +88,6 @@ function startGameLoop() {
     speed = Math.max(500, 2000 - (level * 150));
     gameLoop = setInterval(enemyAttack, speed);
 }
+startGameLoop();
 
 
