@@ -51,8 +51,12 @@ function enemyAttack() {
 
 function nextEnemy() {
     level++;
+     if (level % 5 === 0) {
+        money += 20;
+        console.log(" Bonus de nivel 5!");
+    }
     enemyHealth = 10 + (level * 2);
-
+    
     updateUI();
 
     startGameLoop();
