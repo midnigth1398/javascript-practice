@@ -42,8 +42,15 @@ function attack() {
 }
 
 function enemyAttack() {
-    enemyHealth = enemyHealth - damage;
-    updateUI();
+    enemyHealth--;
+    player.health -= 2;
+
+        updateUI();
+
+        if (player.health <= 0) {
+            alert(" Perdiste");
+            clearInterval(gameLoop);
+        }
 
     if (enemyHealth <= 0) {
         money += 5;
