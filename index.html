@@ -1,112 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Defense Clicker PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: linear-gradient(#0f2027, #203a43, #2c5364);
-            color: white;
-            text-align: center;
-        }
+<title>Defense Clicker Ultimate</title>
 
-        .container {
-            max-width: 450px;
-            margin: auto;
-            padding: 20px;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f2027;
+    color: white;
+    text-align: center;
+}
 
-        .card {
-            background: rgba(0,0,0,0.5);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 10px;
+}
 
-        .bar {
-            width: 100%;
-            height: 20px;
-            background: #333;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
+.card {
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
 
-        .bar-inner {
-            height: 100%;
-            transition: width 0.3s;
-        }
+.bar {
+    width: 100%;
+    height: 18px;
+    background: #333;
+    border-radius: 10px;
+}
 
-        #enemyBar { background: red; }
-        #playerBar { background: cyan; }
+.bar-inner {
+    height: 100%;
+    transition: width 0.2s;
+}
 
-        button {
-            padding: 10px;
-            margin: 5px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+#enemyBar { background: red; }
+#playerBar { background: cyan; }
 
-        .attack { background: #ff5722; }
-        .upgrade { background: #4caf50; }
-        .skill { background: #2196f3; }
+img {
+    width: 100px;
+    transition: transform 0.1s;
+}
 
-        img {
-            width: 100px;
-        }
+button {
+    width: 30%;
+    padding: 12px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+}
 
-        .damage {
-            position: absolute;
-            color: yellow;
-            font-weight: bold;
-            animation: float 1s ease-out;
-        }
+.attack { background: #ff5722; }
+.skill { background: #2196f3; }
+.pause { background: gray; }
 
-        @keyframes float {
-            0% {opacity: 1; transform: translateY(0);}
-            100% {opacity: 0; transform: translateY(-40px);}
-        }
-    </style>
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.damage {
+    position: absolute;
+    font-weight: bold;
+    animation: float 1s ease-out;
+}
+
+@keyframes float {
+    0% {opacity:1; transform: translateY(0);}
+    100% {opacity:0; transform: translateY(-40px);}
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>⚔️ Defense Clicker PRO</h1>
+<h2>⚔️ Defense Clicker</h2>
 
-    <div class="card">
-        <p id="enemyText"></p>
-        <div class="bar"><div id="enemyBar" class="bar-inner"></div></div>
-        <img id="enemyImg" src="./enemy.png">
-    </div>
+<div class="card">
+    <p id="enemyText"></p>
+    <div class="bar"><div id="enemyBar" class="bar-inner"></div></div>
+    <img id="enemyImg" src="./enemy.png">
+</div>
 
-    <div class="card">
-        <p>❤️ Tu vida</p>
-        <div class="bar"><div id="playerBar" class="bar-inner"></div></div>
-        <img src="./player.png">
-    </div>
+<div class="card">
+    <div class="bar"><div id="playerBar" class="bar-inner"></div></div>
+    <img src="./player.png">
+</div>
 
-    <div class="card">
-        <p id="money"></p>
-        <p id="level"></p>
-        <p id="damage"></p>
+<div class="card">
+    <p id="money"></p>
+    <p id="level"></p>
 
-        <button class="attack" onclick="attack()">⚔️ Atacar</button>
-        <button class="upgrade" onclick="upgrade()">⬆️ Mejorar</button>
-        <button class="skill" onclick="special()">⚡ Habilidad</button>
-    </div>
+    <button class="attack" onclick="attack()">⚔️</button>
+    <button class="skill" onclick="skill()">💥</button>
+    <button class="skill" onclick="heal()">❤️</button>
+</div>
 
-    <div class="card">
-        <h3>🛒 Tienda</h3>
-        <button onclick="buyPotion()">💊 Curar (20)</button>
-        <button onclick="buyPower()">💥 +Daño (30)</button>
-    </div>
+<button class="pause" onclick="togglePause()">⏸️ Pausa</button>
 
+</div>
+
+<!-- MENU PAUSA -->
+<div id="pauseMenu" class="menu">
+    <h1>⏸️ Pausado</h1>
+    <button onclick="togglePause()">▶️ Continuar</button>
+    <button onclick="resetGame()">🔄 Reiniciar</button>
 </div>
 
 <script src="game.js"></script>

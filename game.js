@@ -1,22 +1,17 @@
-let enemyHealth = 10;
-let maxEnemyHealth = 10;
+let enemyHealth = 30;
+let maxEnemyHealth = 30;
+let player = { health: 100, maxHealth: 100 };
+
+let damage = 3;
 let money = 0;
-let damage = 1;
 let level = 1;
-let isBoss = false;
 
-let player = {
-    health: 100,
-    maxHealth: 100
-};
-
-let gameLoop;
+let paused = false;
+let lastTime = 0;
 
 // UI
 function updateUI() {
-    document.getElementById("enemyText").textContent =
-        "👹 Vida: " + enemyHealth;
-
+    document.getElementById("enemyText").textContent = "👹 " + enemyHealth;
     document.getElementById("enemyBar").style.width =
         (enemyHealth / maxEnemyHealth) * 100 + "%";
 
@@ -25,141 +20,113 @@ function updateUI() {
 
     document.getElementById("money").textContent = "💰 " + money;
     document.getElementById("level").textContent = "Nivel: " + level;
-    document.getElementById("damage").textContent = "Daño: " + damage;
 }
 
-// daño flotante
-function showDamage(amount) {
+// 💥 daño flotante
+function showDamage(text, color="white") {
     let el = document.createElement("div");
-    el.textContent = "-" + amount;
+    el.textContent = text;
     el.className = "damage";
+    el.style.color = color;
 
-    el.style.left = Math.random() * 200 + "px";
+    el.style.left = (window.innerWidth/2 + Math.random()*100 - 50) + "px";
     el.style.top = "200px";
 
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 1000);
 }
 
+// animación golpe
+function hit() {
+    let enemy = document.getElementById("enemyImg");
+    enemy.style.transform = "scale(1.2)";
+    setTimeout(() => enemy.style.transform = "scale(1)", 100);
+}
+
 // ataque
 function attack() {
-    let crit = Math.random() < 0.25;
-    let finalDamage = crit ? damage * 2 : damage;
+    if (paused) return;
 
-    enemyHealth -= finalDamage;
-    showDamage(finalDamage);
+    let crit = Math.random() < 0.3;
+    let dmg = crit ? damage * 2 : damage;
+
+    enemyHealth -= dmg;
+
+    showDamage("-" + dmg, crit ? "yellow" : "white");
+    hit();
+
+    if (enemyHealth <= 0) nextEnemy();
 
     updateUI();
-
-    if (enemyHealth <= 0) {
-        reward();
-        nextEnemy();
-    }
 }
 
-// habilidad especial
-function special() {
-    let burst = damage * 5;
+// skill
+function skill() {
+    if (paused) return;
 
+    let burst = damage * 4;
     enemyHealth -= burst;
-    showDamage(burst);
+
+    showDamage("-" + burst, "orange");
+    hit();
+
+    if (enemyHealth <= 0) nextEnemy();
 
     updateUI();
-
-    if (enemyHealth <= 0) {
-        reward();
-        nextEnemy();
-    }
 }
 
-// enemigo automático
-function enemyAttack() {
-    enemyHealth -= 1;
-    player.health -= 3;
+// heal
+function heal() {
+    if (paused) return;
 
+    player.health += 20;
+    if (player.health > player.maxHealth) player.health = player.maxHealth;
+
+    showDamage("+20", "lime");
     updateUI();
-
-    if (player.health <= 0) {
-        alert("💀 Perdiste");
-        clearInterval(gameLoop);
-        return;
-    }
-
-    if (enemyHealth <= 0) {
-        reward();
-        nextEnemy();
-    }
 }
 
-// recompensa
-function reward() {
-    if (isBoss) {
-        money += 80;
-        player.health += 30;
-    } else {
-        money += 10;
-        player.health += 10;
+// enemigo loop optimizado
+function gameLoop(time) {
+    if (!paused) {
+        if (time - lastTime > 1500) {
+            player.health -= 2;
+
+            if (player.health <= 0) {
+                alert("💀 Game Over");
+                resetGame();
+                return;
+            }
+
+            lastTime = time;
+            updateUI();
+        }
     }
 
-    if (player.health > player.maxHealth) {
-        player.health = player.maxHealth;
-    }
+    requestAnimationFrame(gameLoop);
 }
 
 // siguiente enemigo
 function nextEnemy() {
     level++;
-    isBoss = level % 10 === 0;
-
-    let img = document.getElementById("enemyImg");
-
-    if (isBoss) {
-        maxEnemyHealth = 100 + level * 10;
-        img.src = "./boss.png";
-    } else {
-        maxEnemyHealth = 15 + level * 3;
-        img.src = "./enemy.png";
-    }
-
+    maxEnemyHealth += 15;
     enemyHealth = maxEnemyHealth;
-
-    startLoop();
+    money += 20;
 }
 
-// tienda
-function buyPotion() {
-    if (money >= 20) {
-        money -= 20;
-        player.health += 30;
-        if (player.health > player.maxHealth) {
-            player.health = player.maxHealth;
-        }
-        updateUI();
-    }
+// pausa
+function togglePause() {
+    paused = !paused;
+
+    document.getElementById("pauseMenu").style.display =
+        paused ? "flex" : "none";
 }
 
-function buyPower() {
-    if (money >= 30) {
-        money -= 30;
-        damage += 2;
-        updateUI();
-    }
+// reset
+function resetGame() {
+    location.reload();
 }
 
-// upgrade básico
-function upgrade() {
-    if (money >= 15) {
-        money -= 15;
-        damage++;
-        updateUI();
-    }
-}
-
-// loop
-function startLoop() {
-    clearInterval(gameLoop);
-    let speed = Math.max(400, 2000 - level * 100);
-    gameLoop = setInterval(enemyAttack, speed);
-}
-
-startLoop();
+// iniciar loop
+requestAnimationFrame(gameLoop);
+updateUI();
