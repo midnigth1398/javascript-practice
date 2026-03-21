@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Defense Clicker</title>
+    <title>Defense Clicker PRO</title>
 
     <style>
         body {
+            margin: 0;
             font-family: Arial;
-            text-align: center;
-            background-color: #111;
+            background: linear-gradient(#0f2027, #203a43, #2c5364);
             color: white;
+            text-align: center;
         }
 
         .container {
-            max-width: 400px;
+            max-width: 450px;
             margin: auto;
             padding: 20px;
+        }
+
+        .card {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
         }
 
         .bar {
@@ -23,29 +31,44 @@
             background: #333;
             border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
 
         .bar-inner {
             height: 100%;
-            background: lime;
             transition: width 0.3s;
         }
+
+        #enemyBar { background: red; }
+        #playerBar { background: cyan; }
 
         button {
             padding: 10px;
             margin: 5px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
         }
 
-        button:hover {
-            background: #444;
-        }
+        .attack { background: #ff5722; }
+        .upgrade { background: #4caf50; }
+        .skill { background: #2196f3; }
 
         img {
-            margin-top: 10px;
+            width: 100px;
+        }
+
+        .damage {
+            position: absolute;
+            color: yellow;
+            font-weight: bold;
+            animation: float 1s ease-out;
+        }
+
+        @keyframes float {
+            0% {opacity: 1; transform: translateY(0);}
+            100% {opacity: 0; transform: translateY(-40px);}
         }
     </style>
 </head>
@@ -54,32 +77,35 @@
 
 <div class="container">
 
-    <h1>Defense Clicker</h1>
+    <h1>⚔️ Defense Clicker PRO</h1>
 
-    <p id="enemy">Vida del enemigo: 10</p>
-
-    <div class="bar">
-        <div id="healthBar" class="bar-inner"></div>
+    <div class="card">
+        <p id="enemyText"></p>
+        <div class="bar"><div id="enemyBar" class="bar-inner"></div></div>
+        <img id="enemyImg" src="./enemy.png">
     </div>
 
-    <p>Tu vida</p>
-    <div class="bar">
-        <div id="playerBar" class="bar-inner"></div>
+    <div class="card">
+        <p>❤️ Tu vida</p>
+        <div class="bar"><div id="playerBar" class="bar-inner"></div></div>
+        <img src="./player.png">
     </div>
 
-    <p id="money">Dinero: 0</p>
-    <p id="level">Nivel: 1</p>
-    <p id="damage">Daño: 1</p>
-    <p id="cost">Costo mejora: 10</p>
+    <div class="card">
+        <p id="money"></p>
+        <p id="level"></p>
+        <p id="damage"></p>
 
-    <button id="attackBtn" onclick="attack()">Atacar</button>
-    <button onclick="upgrade()">Mejorar</button>
+        <button class="attack" onclick="attack()">⚔️ Atacar</button>
+        <button class="upgrade" onclick="upgrade()">⬆️ Mejorar</button>
+        <button class="skill" onclick="special()">⚡ Habilidad</button>
+    </div>
 
-    <h2>Jugador</h2>
-    <img id="playerImg" src="./player.png" width="100">
-
-    <h2>Enemigo</h2>
-    <img id="enemyImg" src="./enemy.png" width="100">
+    <div class="card">
+        <h3>🛒 Tienda</h3>
+        <button onclick="buyPotion()">💊 Curar (20)</button>
+        <button onclick="buyPower()">💥 +Daño (30)</button>
+    </div>
 
 </div>
 
