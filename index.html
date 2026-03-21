@@ -1,28 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Denfese Clicker</title>
+    <title>Defense Clicker</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #111;
+            color: white;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .bar-inner {
+            height: 100%;
+            background: lime;
+            transition: width 0.3s;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        img {
+            margin-top: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Denfese Clicker</h1>
+
+<div class="container">
+
+    <h1>Defense Clicker</h1>
+
     <p id="enemy">Vida del enemigo: 10</p>
-    <div style="width: 200px; height: 20px; background: gray;"><div id=
-            "healthBar" style="
-                height: 100%;
-                width: 100%;
-                background: green;
-                transition: width 0.3s ease;"></div>
-        </div>
+
+    <div class="bar">
+        <div id="healthBar" class="bar-inner"></div>
+    </div>
+
+    <p>Tu vida</p>
+    <div class="bar">
+        <div id="playerBar" class="bar-inner"></div>
+    </div>
+
     <p id="money">Dinero: 0</p>
     <p id="level">Nivel: 1</p>
-    <p id="damage">Dano: 1</p>
+    <p id="damage">Daño: 1</p>
     <p id="cost">Costo mejora: 10</p>
-    <p id="enemy">Vida del enemigo: 10</p>   
-    <p id="playerHealth">Tu Vida: 100</p>
+
+    <button id="attackBtn" onclick="attack()">Atacar</button>
     <button onclick="upgrade()">Mejorar</button>
-    <button id="attackBtn"
-    onclick="attack()">Atacar</button>
-        
-    <script src="game.js"></script>
+
+    <h2>Jugador</h2>
+    <img id="playerImg" src="./player.png" width="100">
+
+    <h2>Enemigo</h2>
+    <img id="enemyImg" src="./enemy.png" width="100">
+
+</div>
+
+<script src="game.js"></script>
+
 </body>
 </html>
