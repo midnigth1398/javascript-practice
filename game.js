@@ -3,6 +3,7 @@ let money = 0;
 let damage = 1;
 let level = 1;
 let upgradeCost = 10;
+let isBoss = false;
 
 function updateUI() {
     let maxHealth = 10 + (level * 2);
@@ -24,10 +25,16 @@ function attack() {
     enemyHealth = enemyHealth - damage;
     updateUI();
 
-    if (enemyHealth <= 0) {
-        money += 5
-        nextEnemy();
+  if (enemyHealth <= 0) { 
+        if (isBoss) {
+            money += 50;
+        } else {
+        money += 5;
+        }
+         nextEnemy();
     }
+       
+
     let enemyText =
     document.getElementById("enemy");
 
@@ -48,26 +55,33 @@ function enemyAttack() {
         updateUI();
 
         if (player.health <= 0) {
-            alert(" Perdiste");
+            alert("💀 Perdiste");
             clearInterval(gameLoop);
         }
 
-    if (enemyHealth <= 0) {
+    if (enemyHealth <= 0) { 
+        if (isBoss) {
+            money += 50;
+        } else {
         money += 5;
-        nextEnemy();
+        }
+         nextEnemy();
     }
 }
 
 function nextEnemy() {
     level++;
-     if (level % 5 === 0) {
-        money += 20;
-        console.log(" Bonus de nivel 5!");
-    }
-    enemyHealth = 10 + (level * 2);
-    
-    updateUI();
 
+    isBoss = level % 10 === 0;
+
+    if (isBoss) {
+        enemyHealth = 50 + (level * 5);
+        console.log("👹 JEFE!")
+    } else {
+        enemyHealth = 10 + (level * 2);
+    }
+     
+    updateUI();
     startGameLoop();
 }
 
